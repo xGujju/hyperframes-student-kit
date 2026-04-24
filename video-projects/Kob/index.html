@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Kob — TikTok Short</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700;800&family=Kanit:wght@400;700;900&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #060410;
+        font-family: "Sarabun", sans-serif;
+        color: #ffffff;
+      }
+      #face-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+        transform-origin: 0 0;
+        z-index: 0;
+      }
+      #face-video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform-origin: center center;
+        filter: contrast(1.08) saturate(1.06) brightness(0.97);
+      }
+      #face-wrapper::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 50%,
+          rgba(6, 4, 16, 0.35) 82%,
+          rgba(6, 4, 16, 0.72) 100%
+        );
+      }
+      .scene-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1080px;
+        height: 1920px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="73.4"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Layer 1: Ambient background (below everything) -->
+      <div
+        id="ambient-bg"
+        class="scene-layer"
+        data-composition-id="ambient-bg"
+        data-composition-src="compositions/ambient-bg.html"
+        data-start="0"
+        data-duration="73.4"
+        data-track-index="3"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <!-- Layer 2: Talking head face -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="73.4"
+          data-track-index="0"
+          src="Kob-HyperFrames_1080p.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- Layer 3: Face audio (separate mixer track) -->
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="73.4"
+        data-track-index="4"
+        data-volume="1"
+        src="Kob-HyperFrames_1080p.mp4"
+      ></audio>
+
+      <!-- Layer 4: Seam treatment (feathers y=960 edge) -->
+      <div
+        id="seam-treatment"
+        class="scene-layer"
+        data-composition-id="seam-treatment"
+        data-composition-src="compositions/seam-treatment.html"
+        data-start="0"
+        data-duration="73.4"
+        data-track-index="5"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <!-- Scene overlays — timed to Thai transcript -->
+      <!-- S1: Hook 0–7.82s  "หยุดดูคลิบนี้ด่วน ถ้าไม่อยากหมดตัว" -->
+      <div id="scene-1" class="scene-layer"
+        data-composition-id="scene1-hook"
+        data-composition-src="compositions/scene1-hook.html"
+        data-start="0" data-duration="7.82"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- S2: Problem 7.82–19.74s  "ไม่ใช่เพราะสูตรไม่ดี" -->
+      <div id="scene-2" class="scene-layer"
+        data-composition-id="scene2-context"
+        data-composition-src="compositions/scene2-context.html"
+        data-start="7.82" data-duration="11.91"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- S3: Rule 1 19.74–30.44s  "เทรดแค่ 3 ไม้/วัน" -->
+      <div id="scene-3" class="scene-layer"
+        data-composition-id="scene3-point"
+        data-composition-src="compositions/scene3-point.html"
+        data-start="19.74" data-duration="10.70"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- S4: Rule 2 30.44–42.90s  "ห้ามดูหน้าจอ 15 นาที" -->
+      <div id="scene-4" class="scene-layer"
+        data-composition-id="scene4-data"
+        data-composition-src="compositions/scene4-data.html"
+        data-start="30.44" data-duration="12.45"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- S5: Rule 3 + Pro metaphor 42.90–65.54s  "RR 1:2 / มือโปร vs มือสมัก" -->
+      <div id="scene-5" class="scene-layer"
+        data-composition-id="scene5-insight"
+        data-composition-src="compositions/scene5-insight.html"
+        data-start="42.90" data-duration="22.64"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- S6: CTA 65.54–73.4s  "กดติดตามไว้เลย" -->
+      <div id="scene-6" class="scene-layer"
+        data-composition-id="scene6-cta"
+        data-composition-src="compositions/scene6-cta.html"
+        data-start="65.54" data-duration="7.86"
+        data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- Captions (top layer) -->
+      <div
+        id="captions"
+        class="scene-layer"
+        data-composition-id="captions"
+        data-composition-src="compositions/captions.html"
+        data-start="0"
+        data-duration="73.4"
+        data-track-index="2"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      var mainTl = gsap.timeline({ paused: true });
+
+      // Face wrapper constants — 1920x1080 source, 1080x1920 canvas
+      var BOTTOM     = { x: -180, y: 1110, scale: 0.75 };
+      var FULLSCREEN = { x: -420, y: 0,    scale: 1.7778 };
+      var MODE_DUR   = 0.38;
+
+      // Set initial BOTTOM position via GSAP (CSS transform removed to avoid conflict)
+      mainTl.set("#face-wrapper", BOTTOM, 0);
+
+      // Face mode transitions synced to scene boundaries
+      [
+        { t: 19.74, mode: FULLSCREEN },  // Rule 1 reveal — full face for impact
+        { t: 30.44, mode: BOTTOM },      // Rule 2 — back to bottom for data overlay
+        { t: 42.90, mode: FULLSCREEN },  // Rule 3 + Pro metaphor — full face drama
+        { t: 65.54, mode: BOTTOM },      // CTA — bottom face, card overlay
+      ].forEach(function (item) {
+        mainTl.to("#face-wrapper", {
+          x: item.mode.x,
+          y: item.mode.y,
+          scale: item.mode.scale,
+          duration: MODE_DUR,
+          ease: "expo.inOut",
+        }, item.t - 0.15);
+      });
+
+      // Ken Burns subtle zoom over full duration
+      mainTl.to("#face-video", { scale: 1.03, duration: 73.4, ease: "none" }, 0);
+
+      mainTl.set({}, {}, 73.4);
+      window.__timelines["main"] = mainTl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<template id="seam-treatment-template">
+  <div
+    data-composition-id="seam-treatment"
+    data-start="0"
+    data-width="1080"
+    data-height="1920"
+    data-duration="73.4"
+  >
+    <div class="seam-gradient" id="seam-gradient"></div>
+    <div class="seam-line" id="seam-line"></div>
+
+    <style>
+      [data-composition-id="seam-treatment"] {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      [data-composition-id="seam-treatment"] .seam-gradient {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 960px;
+        height: 90px;
+        background: linear-gradient(
+          to bottom,
+          rgba(6, 4, 16, 0.9) 0%,
+          rgba(6, 4, 16, 0.45) 40%,
+          rgba(6, 4, 16, 0) 100%
+        );
+        opacity: 0;
+      }
+      [data-composition-id="seam-treatment"] .seam-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 958px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(192, 132, 252, 0.3) 20%,
+          rgba(192, 132, 252, 0.85) 50%,
+          rgba(192, 132, 252, 0.3) 80%,
+          transparent 100%
+        );
+        box-shadow: 0 0 16px rgba(192, 132, 252, 0.5);
+        opacity: 0;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        var TOTAL = 73.4;
+        var FADE = 0.25;
+
+        // Seam visible during bottom-half scenes — will be updated after transcript
+        // defines exact scene boundaries. For now always visible.
+        var els = [
+          '[data-composition-id="seam-treatment"] #seam-gradient',
+          '[data-composition-id="seam-treatment"] #seam-line',
+        ];
+
+        els.forEach(function (sel) { tl.set(sel, { opacity: 0 }, 0); });
+        els.forEach(function (sel, i) {
+          var target = i === 0 ? 1.0 : 0.85;
+          tl.to(sel, { opacity: target, duration: FADE, ease: "power2.out" }, 0.1);
+          tl.to(sel, { opacity: 0, duration: FADE, ease: "power2.in" }, TOTAL - FADE - 0.1);
+        });
+
+        tl.set({}, {}, TOTAL);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["seam-treatment"] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,157 @@
+<template id="captions-template">
+  <div
+    data-composition-id="captions"
+    data-start="0"
+    data-width="1080"
+    data-height="1920"
+    data-duration="73.4"
+  >
+    <div class="cap-stage" id="cap-stage"></div>
+
+    <style>
+      [data-composition-id="captions"] {
+        position: absolute; inset: 0; pointer-events: none;
+      }
+      [data-composition-id="captions"] .cap-stage {
+        position: absolute; left: 0; right: 0; bottom: 240px;
+        height: 0; pointer-events: none;
+      }
+      [data-composition-id="captions"] .cap-line-wrap {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        display: flex; justify-content: center;
+        padding: 0 56px; opacity: 0; visibility: hidden;
+      }
+      [data-composition-id="captions"] .cap-line {
+        display: inline-block; max-width: 940px;
+        padding: 0 10px; text-align: center;
+        font-family: "Sarabun", sans-serif;
+        font-weight: 800; font-size: 52px; line-height: 1.35;
+        letter-spacing: 0.01em; color: #ffffff;
+        text-shadow:
+          -3px -3px 0 #060410,  3px -3px 0 #060410,
+          -3px  3px 0 #060410,  3px  3px 0 #060410,
+          -4px  0   0 #060410,  4px  0   0 #060410,
+           0   -4px 0 #060410,  0    4px 0 #060410,
+           0    6px 16px rgba(0,0,0,0.65);
+        white-space: normal;
+      }
+      [data-composition-id="captions"] .cap-word {
+        display: inline-block; transform-origin: center center;
+        will-change: transform, color;
+      }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@800&display=block" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        // Segments from whisper Thai transcription — segment-level timing.
+        // Thai doesn't space-delimit so we treat each segment as one unit;
+        // we still split on spaces for accent effect where whisper gave space-separated tokens.
+        var SEGMENTS = [
+          { text: "เทรด BTC แล้วขาดทุน ตั้งแต่หัววัน?", start: 0.00,  end: 4.00  },
+          { text: "หยุดดูคลิปนี้ด่วน ถ้าไม่อยากหมดตัว", start: 4.78,  end: 7.82  },
+          { text: "ที่เสียอยู่นี่ ไม่ใช่เพราะสูตรไม่ดี", start: 7.82,  end: 10.90 },
+          { text: "แต่เพราะปิดออร์เดอร์เร็วเกินไป",       start: 10.90, end: 14.10 },
+          { text: "ไหลตามแท่งเทียน 1 นาทีตลอด",          start: 14.10, end: 16.58 },
+          { text: "นั่นแหละเรียกว่าหาเรื่องเสียเอง",      start: 16.58, end: 19.32 },
+          { text: "กฎข้อที่ 1 จำกัดตัวเองเลยครับ",        start: 19.74, end: 22.00 },
+          { text: "เทรดได้แค่ 3 ไม้ต่อวันเท่านั้น",       start: 22.00, end: 25.96 },
+          { text: "ครบ 3 ไม้ปุ๊บ พับจอ จบเลย",             start: 25.96, end: 30.18 },
+          { text: "กฎข้อที่ 2 หลังได้หรือเสียไป",          start: 30.44, end: 33.48 },
+          { text: "ห้ามดูหน้าจอ 15 นาที ไปสงบสติก่อน",    start: 33.84, end: 38.10 },
+          { text: "ไม่งั้นจะ Revenge Trade เสียเพิ่มกว่าเดิม", start: 38.10, end: 42.52 },
+          { text: "กฎข้อสุดท้าย",                          start: 42.90, end: 43.98 },
+          { text: "ทุกครั้งที่เข้า ต้องมี RR อย่างน้อย 1:2", start: 44.20, end: 48.20 },
+          { text: "ถ้าคำนวณแล้ว ไม่คุ้ม",                  start: 48.20, end: 50.24 },
+          { text: "ก็ไม่ต้องกด",                           start: 50.24, end: 51.04 },
+          { text: "ถือว่าจุดนั้น ไม่มีอยู่จริงในโลก",     start: 51.26, end: 54.00 },
+          { text: "เทรดเดอร์มือโปร เหมือนสไนเปอร์",       start: 54.00, end: 56.90 },
+          { text: "รอจังหวะ ยิงดอกเดียวจอด",               start: 56.90, end: 59.64 },
+          { text: "ส่วนมือสมัคร",                           start: 59.64, end: 60.80 },
+          { text: "เหมือนปืนกล สาดมั่วหมด",                start: 60.80, end: 62.80 },
+          { text: "แต่ไม่โดนอะไรเลย นอกจากขาดทุน",        start: 62.80, end: 65.18 },
+          { text: "เลิกเป็นเหยื่อตลาดได้แล้วครับ",        start: 65.54, end: 67.04 },
+          { text: "เริ่มทำตามระบบได้เลย",                  start: 67.04, end: 68.58 },
+          { text: "ใครอยากได้เทคนิค กดติดตามเลย",         start: 68.82, end: 72.76 },
+          { text: "แล้วเจอกัน 👋",                         start: 72.76, end: 73.38 },
+        ];
+
+        var COMP_DURATION = 73.4;
+        var DIM    = "rgba(255,255,255,0.55)";
+        var ACTIVE = "#c084fc";
+        var SPOKEN = "#ffffff";
+        var ACTIVE_SCALE = 1.10;
+
+        var stage = document.querySelector('[data-composition-id="captions"] #cap-stage');
+        if (!stage) return;
+
+        // Build DOM: one wrapper per segment, words split on spaces for accent
+        SEGMENTS.forEach(function (seg, si) {
+          var wrap = document.createElement("div");
+          wrap.className = "cap-line-wrap";
+          wrap.id = "cap-seg-" + si;
+
+          var line = document.createElement("div");
+          line.className = "cap-line";
+
+          var words = seg.text.split(" ");
+          words.forEach(function (w, wi) {
+            var span = document.createElement("span");
+            span.className = "cap-word";
+            span.id = "cap-w-" + si + "-" + wi;
+            span.textContent = w;
+            line.appendChild(span);
+            if (wi < words.length - 1) line.appendChild(document.createTextNode("\u00a0"));
+          });
+
+          wrap.appendChild(line);
+          stage.appendChild(wrap);
+        });
+
+        var tl = gsap.timeline({ paused: true });
+        var FADE_IN  = 0.18;
+        var FADE_OUT = 0.16;
+        var PRE_ROLL  = 0.1;
+        var POST_HOLD = 0.1;
+
+        SEGMENTS.forEach(function (seg, si) {
+          var wrapSel = '[data-composition-id="captions"] #cap-seg-' + si;
+          var fadeInAt  = Math.max(seg.start - PRE_ROLL, 0);
+          var fadeOutAt = seg.end + POST_HOLD;
+          var hideAt    = fadeOutAt + FADE_OUT + 0.05;
+          var dur = seg.end - seg.start;
+          var words = seg.text.split(" ");
+
+          // Reset all words to dim
+          words.forEach(function (w, wi) {
+            tl.set('[data-composition-id="captions"] #cap-w-' + si + "-" + wi, { color: DIM, scale: 1.0 }, fadeInAt);
+          });
+
+          tl.set(wrapSel, { visibility: "visible" }, fadeInAt);
+          tl.fromTo(wrapSel,
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, duration: FADE_IN, ease: "power2.out" },
+            fadeInAt
+          );
+
+          // Stagger word highlights across segment duration
+          var wordDur = dur / Math.max(words.length, 1);
+          words.forEach(function (w, wi) {
+            var wordSel = '[data-composition-id="captions"] #cap-w-' + si + "-" + wi;
+            var wt = seg.start + wi * wordDur;
+            tl.to(wordSel, { color: ACTIVE, scale: ACTIVE_SCALE, duration: 0.08, ease: "back.out(3)" }, wt);
+            tl.to(wordSel, { color: SPOKEN, scale: 1.0, duration: 0.1, ease: "power2.out" }, wt + wordDur * 0.8);
+          });
+
+          tl.to(wrapSel, { opacity: 0, duration: FADE_OUT, ease: "power2.in" }, fadeOutAt);
+          tl.set(wrapSel, { visibility: "hidden" }, hideAt);
+        });
+
+        tl.set({}, {}, COMP_DURATION);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["captions"] = tl;
+      })();
+    </script>
+  </div>
+</template>

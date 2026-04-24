@@ -1,0 +1,88 @@
+<template id="scene2-context-template">
+  <div
+    data-composition-id="scene2-context"
+    data-start="0"
+    data-width="1080"
+    data-height="1920"
+    data-duration="11.92"
+  >
+    <div class="s2-panel">
+      <div class="s2-eyebrow" id="s2-eyebrow">ปัญหาที่แท้จริง</div>
+      <div class="s2-hl">
+        <div class="s2-word" id="s2-w1">ไม่ใช่</div>
+        <div class="s2-word s2-accent" id="s2-w2">สูตรไม่ดี</div>
+      </div>
+      <div class="s2-divider" id="s2-div"></div>
+      <div class="s2-reason" id="s2-reason">
+        <div class="s2-r-row" id="s2-r1">
+          <span class="s2-x">✕</span>
+          <span>ปิดออร์เดอร์เร็วเกินไป</span>
+        </div>
+        <div class="s2-r-row" id="s2-r2">
+          <span class="s2-x">✕</span>
+          <span>ไหลตามแท่งเทียน 1 นาที</span>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      [data-composition-id="scene2-context"] { position: absolute; inset: 0; }
+      [data-composition-id="scene2-context"] .s2-panel {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 960px;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 72px 80px; gap: 26px; box-sizing: border-box; overflow: hidden;
+      }
+      [data-composition-id="scene2-context"] .s2-eyebrow {
+        font-family: "Kanit", sans-serif; font-weight: 400; font-size: 34px;
+        letter-spacing: 0.22em; color: #c084fc; text-transform: uppercase;
+        opacity: 0; transform: translateX(-24px);
+      }
+      [data-composition-id="scene2-context"] .s2-hl { display: flex; flex-direction: column; gap: 4px; }
+      [data-composition-id="scene2-context"] .s2-word {
+        font-family: "Kanit", sans-serif; font-weight: 900; font-size: 128px;
+        line-height: 0.92; letter-spacing: -0.02em;
+        background: linear-gradient(180deg, #fff 0%, #bbb 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text; opacity: 0; clip-path: inset(0 100% 0 0);
+      }
+      [data-composition-id="scene2-context"] .s2-accent {
+        background: linear-gradient(135deg, #f87171 0%, #fb923c 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      [data-composition-id="scene2-context"] .s2-divider {
+        height: 3px; width: 0;
+        background: linear-gradient(90deg, #c084fc, transparent);
+        border-radius: 2px;
+      }
+      [data-composition-id="scene2-context"] .s2-reason { display: flex; flex-direction: column; gap: 14px; }
+      [data-composition-id="scene2-context"] .s2-r-row {
+        display: flex; align-items: center; gap: 18px;
+        font-family: "Sarabun", sans-serif; font-weight: 600; font-size: 42px;
+        color: rgba(255,255,255,0.85); opacity: 0; transform: translateX(-20px);
+      }
+      [data-composition-id="scene2-context"] .s2-x {
+        color: #f87171; font-size: 44px; font-weight: 900;
+        text-shadow: 0 0 12px rgba(248,113,113,0.6);
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        var s = '[data-composition-id="scene2-context"] ';
+        tl.to(s + "#s2-eyebrow", { opacity: 1, x: 0, duration: 0.38, ease: "power3.out" }, 0.1);
+        tl.to(s + "#s2-w1", { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.35, ease: "power3.out" }, 0.4);
+        tl.to(s + "#s2-w2", { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.35, ease: "power3.out" }, 0.65);
+        tl.to(s + "#s2-div", { width: 280, duration: 0.45, ease: "power2.out" }, 1.0);
+        tl.to(s + "#s2-r1",  { opacity: 1, x: 0, duration: 0.35, ease: "back.out(1.3)" }, 2.5);
+        tl.to(s + "#s2-r2",  { opacity: 1, x: 0, duration: 0.35, ease: "back.out(1.3)" }, 6.0);
+        tl.set({}, {}, 11.92);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["scene2-context"] = tl;
+      })();
+    </script>
+  </div>
+</template>

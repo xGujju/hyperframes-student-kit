@@ -1,0 +1,161 @@
+<template id="scene5-insight-template">
+  <div
+    data-composition-id="scene5-insight"
+    data-start="0"
+    data-width="1080"
+    data-height="1920"
+    data-duration="22.64"
+  >
+    <div class="s5-panel">
+      <!-- Rule 3 block (visible 0–11s) -->
+      <div class="s5-r3" id="s5-r3">
+        <div class="s5-label">กฎข้อที่ 3</div>
+        <div class="s5-rr-wrap">
+          <div class="s5-rr-num" id="s5-rr">RR</div>
+          <div class="s5-rr-ratio" id="s5-ratio">1 : 2</div>
+        </div>
+        <div class="s5-rr-desc" id="s5-desc">ทุกครั้งที่เข้า ต้องได้อย่างน้อย</div>
+        <div class="s5-rr-rule" id="s5-rule">
+          <span class="s5-rr-lose">เสีย 1</span>
+          <span class="s5-arrow">→</span>
+          <span class="s5-rr-win">ได้ 2</span>
+        </div>
+        <div class="s5-skip" id="s5-skip">
+          <span class="s5-x">✕</span>
+          <span>ไม่คุ้ม → ไม่กด</span>
+        </div>
+      </div>
+
+      <!-- Pro vs Rookie block (visible ~11s–22.64s) -->
+      <div class="s5-compare" id="s5-compare">
+        <div class="s5-pro" id="s5-pro">
+          <div class="s5-c-icon">🎯</div>
+          <div class="s5-c-title">มือโปร</div>
+          <div class="s5-c-sub">รอจังหวะ<br>ยิงทีเดียวจอด</div>
+        </div>
+        <div class="s5-vs" id="s5-vs">VS</div>
+        <div class="s5-rookie" id="s5-rookie">
+          <div class="s5-c-icon">🔫</div>
+          <div class="s5-c-title">มือสมัค</div>
+          <div class="s5-c-sub">สาดกระสุน<br>ไม่โดนอะไรเลย</div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      [data-composition-id="scene5-insight"] { position: absolute; inset: 0; }
+      [data-composition-id="scene5-insight"] .s5-panel {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 960px;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 60px 80px; gap: 24px; box-sizing: border-box; overflow: hidden;
+      }
+      /* Rule 3 */
+      [data-composition-id="scene5-insight"] .s5-r3 {
+        display: flex; flex-direction: column; gap: 18px;
+      }
+      [data-composition-id="scene5-insight"] .s5-label {
+        font-family: "Kanit", sans-serif; font-weight: 400; font-size: 34px;
+        letter-spacing: 0.22em; color: #c084fc; text-transform: uppercase; opacity: 0;
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-wrap {
+        display: flex; align-items: baseline; gap: 20px; opacity: 0; transform: translateY(28px);
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-num {
+        font-family: "Kanit", sans-serif; font-weight: 900; font-size: 140px; line-height: 0.88;
+        background: linear-gradient(135deg, #fff 20%, #c084fc 60%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-ratio {
+        font-family: "Kanit", sans-serif; font-weight: 900; font-size: 100px;
+        color: #4ade80; text-shadow: 0 0 20px rgba(74,222,128,0.4);
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-desc {
+        font-family: "Sarabun", sans-serif; font-weight: 600; font-size: 40px;
+        color: rgba(255,255,255,0.75); opacity: 0;
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-rule {
+        display: flex; align-items: center; gap: 20px; opacity: 0;
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-lose {
+        font-family: "Kanit", sans-serif; font-weight: 700; font-size: 56px;
+        background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.4);
+        color: #f87171; border-radius: 12px; padding: 8px 24px;
+      }
+      [data-composition-id="scene5-insight"] .s5-arrow {
+        font-size: 48px; color: rgba(255,255,255,0.4);
+      }
+      [data-composition-id="scene5-insight"] .s5-rr-win {
+        font-family: "Kanit", sans-serif; font-weight: 700; font-size: 56px;
+        background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.4);
+        color: #4ade80; border-radius: 12px; padding: 8px 24px;
+      }
+      [data-composition-id="scene5-insight"] .s5-skip {
+        display: flex; align-items: center; gap: 16px; opacity: 0;
+        font-family: "Sarabun", sans-serif; font-weight: 600; font-size: 40px;
+        color: rgba(255,255,255,0.7);
+      }
+      [data-composition-id="scene5-insight"] .s5-x {
+        color: #f87171; font-size: 40px; font-weight: 900;
+      }
+      /* Compare */
+      [data-composition-id="scene5-insight"] .s5-compare {
+        display: flex; align-items: stretch; gap: 0; opacity: 0;
+        position: absolute; top: 0; left: 0; width: 1080px; height: 960px;
+        padding: 60px 60px; box-sizing: border-box;
+      }
+      [data-composition-id="scene5-insight"] .s5-pro,
+      [data-composition-id="scene5-insight"] .s5-rookie {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; gap: 16px; padding: 30px;
+        border-radius: 24px;
+      }
+      [data-composition-id="scene5-insight"] .s5-pro {
+        background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.3);
+      }
+      [data-composition-id="scene5-insight"] .s5-rookie {
+        background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.3);
+      }
+      [data-composition-id="scene5-insight"] .s5-c-icon { font-size: 80px; }
+      [data-composition-id="scene5-insight"] .s5-c-title {
+        font-family: "Kanit", sans-serif; font-weight: 900; font-size: 64px;
+        color: #fff; line-height: 1;
+      }
+      [data-composition-id="scene5-insight"] .s5-c-sub {
+        font-family: "Sarabun", sans-serif; font-weight: 500; font-size: 36px;
+        color: rgba(255,255,255,0.75); text-align: center; line-height: 1.4;
+      }
+      [data-composition-id="scene5-insight"] .s5-vs {
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Kanit", sans-serif; font-weight: 900; font-size: 52px;
+        color: rgba(255,255,255,0.4); padding: 0 20px; flex-shrink: 0;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        var s = '[data-composition-id="scene5-insight"] ';
+
+        // Rule 3 block
+        tl.to(s + ".s5-label",   { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.1);
+        tl.to(s + ".s5-rr-wrap", { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 0.35);
+        tl.to(s + ".s5-rr-desc", { opacity: 1, duration: 0.35, ease: "power2.out" }, 0.75);
+        tl.to(s + ".s5-rr-rule", { opacity: 1, duration: 0.4, ease: "back.out(1.3)" }, 2.5);
+        tl.to(s + ".s5-skip",    { opacity: 1, duration: 0.35, ease: "power2.out" }, 5.5);
+
+        // Transition to compare: fade out r3, fade in compare at ~11s local
+        tl.to(s + "#s5-r3",      { opacity: 0, duration: 0.4, ease: "power2.in" }, 11.0);
+        tl.to(s + "#s5-compare", { opacity: 1, duration: 0.5, ease: "power2.out" }, 11.3);
+        tl.from(s + ".s5-pro",   { x: -60, opacity: 0, duration: 0.5, ease: "power3.out" }, 11.3);
+        tl.from(s + ".s5-vs",    { scale: 0.5, opacity: 0, duration: 0.35, ease: "back.out(2)" }, 11.6);
+        tl.from(s + ".s5-rookie",{ x: 60, opacity: 0, duration: 0.5, ease: "power3.out" }, 11.3);
+
+        tl.set({}, {}, 22.64);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["scene5-insight"] = tl;
+      })();
+    </script>
+  </div>
+</template>
